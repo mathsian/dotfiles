@@ -1,4 +1,4 @@
-sudo apt-get zsh vim
+sudo aptitude install zsh vim 
 
 echo ".cfg" >> .gitignore
 
