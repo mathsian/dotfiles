@@ -1,3 +1,5 @@
+set tabstop=4
+set expandtab
 set nocompatible              " required
 filetype off                  " required
 
@@ -21,7 +23,6 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 au BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix
-au BufNewFile,BufRead *.html set tabstop=2 softtabstop=2 shiftwidth=2 textwidth=79 expandtab autoindent fileformat=unix
-
+au BufNewFile,BufRead *.html,*.jade,*.css,*.less set tabstop=2 softtabstop=2 shiftwidth=2 textwidth=79 expandtab autoindent fileformat=unix
 let python_highlight_all=1
 syntax on
