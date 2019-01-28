@@ -9,5 +9,8 @@ myLayout = spiral (3/4) ||| Full ||| tiled ||| Mirror tiled
     nmaster = 1
     ratio = 5/8
     delta = 1/100
+myFocusedBorderColor = "#A7DBD8"
+
 main = xmonad $ gnomeConfig
-  {layoutHook = avoidStruts (myLayout)}
+  {layoutHook = avoidStruts (myLayout),
+   focusedBorderColor = myFocusedBorderColor}
