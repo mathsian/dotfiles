@@ -1,7 +1,6 @@
 ;; -*- mode: emacs-lisp -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
-
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
 You should not put any user code in this function besides modifying the variable
@@ -31,6 +30,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(racket
+     pdf
      ess
      org
      python
@@ -123,7 +123,7 @@ values."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   dotspacemacs-startup-banner 'official
+   dotspacemacs-startup-banner nil
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
    ;; Possible values for list-type are:
@@ -317,27 +317,6 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
- (eval-after-load 'org
-      (lambda()
-        (require 'ess-site)
-        (require 'ob-R)
-        (require 'ob-emacs-lisp)
-        (require 'ob-latex)
-        (require 'ob-python)
-        (require 'ob-org)
-        (require 'ob-css)
-        (require 'ob-js)
-        (setq org-export-babel-evaluate nil)
-        (setq org-startup-indented t)
-        ;; increase imenu depth to include third level headings
-        (setq org-imenu-depth 3)
-        ;; Set sensible mode for editing dot files
-        (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
-        ;; Update images from babel code blocks automatically
-        (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
-        (setq org-src-fontify-natively t)
-        (setq org-src-tab-acts-natively t)
-        (setq org-confirm-babel-evaluate nil)))
   )
 
 (defun dotspacemacs/user-config ()
@@ -347,12 +326,46 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  (setq org-confirm-babel-evaluate nil)
   (setq doc-view-continuous t)
-  (setq org-directory "~/Remote/org")
-  (setq org-default-notes-file (concat org-directory "/notes.org"))
+  (eval-after-load 'org
+    (lambda()
+      (require 'ess-site)
+      (require 'ob-R)
+      (require 'ob-emacs-lisp)
+      (require 'ob-latex)
+      (require 'ob-python)
+      (require 'ob-org)
+      (require 'ob-css)
+      (require 'ob-js)
+      (require 'ob-kotlin)
+      (require 'org-drill)
+      (setq org-export-babel-evaluate nil)
+      (setq org-startup-indented t)
+      ;; increase imenu depth to include third level headings
+      (setq org-imenu-depth 3)
+      ;; Set sensible mode for editing dot files
+      (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
+      ;; Update images from babel code blocks automatically
+      (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+      (setq org-src-fontify-natively t)
+      (setq org-src-tab-acts-natively t)
+      (setq org-confirm-babel-evaluate nil)
+      (setq org-directory "~/Remote/org/")
+      (setq org-default-notes-file (concat org-directory "notes.org"))
+      (setq org-capture-templates
+            '(
+              ("d" "Diary" entry (file+datetree "~/Remote/org/journal.org") "* %?\n")
+              ("q" "Quick note" entry (file org-default-notes-file) "* %?")
+              ("n" "Note" entry (file org-default-notes-file) "* %^{Heading} %^G\n%?")
+              ("r" "Drill item" entry (file "~/Remote/org/drill.org") "* %^{Question} :drill:\n%^{Answer}")
+              ("t" "Todo" entry (file+headline "~/Remote/org/taskdiary.org" "Triage") "* TODO %? %^G\n Added: %U")
+              ))
+      (setq org-agenda-files '("~/Remote/org/"))
+      (setq org-refile-targets '((nil :maxlevel . 9)
+                                 (org-agenda-files :maxlevel . 2)))
+      (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
+      (setq org-refile-use-outline-path t)))
   )
-
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
 (custom-set-variables
@@ -401,8 +414,21 @@ This function is called at the very end of Spacemacs initialization."
      ("XXX" . "#dc752f")
      ("XXXX" . "#dc752f")
      ("???" . "#dc752f")))
+ '(org-capture-templates
+   '(("s" "Test" entry
+      (file "~/Remote/org/test.org")
+      "* %?
+")
+     ("n" "Note" entry
+      (file+datetree org-default-notes-file)
+      "* %? %^G
+")
+     ("t" "Todo" entry
+      (file+headline "~/Remote/org/taskdiary.org" "Triage")
+      "* TODO %? %^G
+ Added: %U")))
  '(package-selected-packages
-   '(racket-mode helm-gtags ggtags counsel-gtags company-quickhelp yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic unfill smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit transient git-commit with-editor diff-hl company-statistics company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
+   '(ob-kotlin kotlin-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic unfill smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit transient git-commit with-editor diff-hl company-statistics company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    '((20 . "#f36c60")
