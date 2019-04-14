@@ -1,21 +1,20 @@
 import XMonad
-import XMonad.Config.Gnome
-import XMonad.Layout.Spiral
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.SetWMName
-
-myLayout = spiral (3/4) ||| Full ||| tiled ||| Mirror tiled
-  where
-    tiled = Tall nmaster delta ratio
-    nmaster = 1
-    ratio = 5/8
-    delta = 1/100
-myFocusedBorderColor = "#A7DBD8"
-
-myStartupHook = do
-        setWMName "LG3D"
-
-main = xmonad $ gnomeConfig
-        {layoutHook = avoidStruts myLayout,
-        startupHook = myStartupHook,
-        focusedBorderColor = myFocusedBorderColor}
+import XMonad.Hooks.DynamicLog
+import XMonad.Util.Run(spawnPipe)
+import System.IO
+main = do
+        xmproc <- spawnPipe "xmobar ~/.xmobarrc"
+        xmonad $ docks $ defaultConfig
+                { terminal = "urxvt"
+                , modMask = mod4Mask
+                , borderWidth = 2
+                , normalBorderColor = "#cccccc"
+                , focusedBorderColor = "#cd8b00"
+                , manageHook = manageDocks <+> manageHook defaultConfig
+                , layoutHook = avoidStruts $ layoutHook defaultConfig
+                , logHook = dynamicLogWithPP xmobarPP
+                        { ppOutput = hPutStrLn xmproc
+                        , ppTitle = xmobarColor "green" "hi" . shorten 50
+                        }
+                }
