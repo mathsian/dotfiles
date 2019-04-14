@@ -6,7 +6,7 @@ import System.IO
 main = do
         xmproc <- spawnPipe "xmobar ~/.xmobarrc"
         xmonad $ docks $ defaultConfig
-                { terminal = "urxvt"
+                { terminal = "kitty"
                 , modMask = mod4Mask
                 , borderWidth = 2
                 , normalBorderColor = "#cccccc"
