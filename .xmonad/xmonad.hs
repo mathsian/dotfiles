@@ -4,6 +4,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.DynamicLog
 import XMonad.Util.Run(spawnPipe)
 import System.IO
+import XMonad.Util.EZConfig(additionalKeysP)
 
 xmobarTitleColor = "#6c99bb"
 xmobarCurrentWorkspaceColor = "#e5b567"
@@ -27,4 +28,6 @@ main = do
                         , ppSep = "   "
                         }
                 , startupHook = setWMName "LG3D"
-                }
+                } `additionalKeysP`
+                [("M-S-p", spawn "rofi -show run")
+                ]
