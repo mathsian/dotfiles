@@ -29,5 +29,5 @@ main = do
                         }
                 , startupHook = setWMName "LG3D"
                 } `additionalKeysP`
-                [("M-S-p", spawn "rofi -show run")
+                [("M-S-p", spawn "rofi -show combi")
                 ]
