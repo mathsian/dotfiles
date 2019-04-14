@@ -20,11 +20,11 @@ main = do
                 , focusedBorderColor = myFocusedBorderColor
                 , manageHook = manageDocks <+> manageHook defaultConfig
                 , layoutHook = avoidStruts $ layoutHook defaultConfig
-                , logHook = dynamicLogWithPP $ xmobarPP {
-                    ppOutput = hPutStrLn xmproc
-                  , ppTitle = xmobarColor xmobarTitleColor "" . shorten 100
-                  , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
-                  , ppSep = "   "
-                  }
+                , logHook = dynamicLogWithPP $ xmobarPP 
+                        { ppOutput = hPutStrLn xmproc
+                        , ppTitle = xmobarColor xmobarTitleColor "" . shorten 100
+                        , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
+                        , ppSep = "   "
+                        }
                 , startupHook = setWMName "LG3D"
-        }
+                }

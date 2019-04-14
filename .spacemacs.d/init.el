@@ -350,17 +350,17 @@ you should place your code here."
       (setq org-src-fontify-natively t)
       (setq org-src-tab-acts-natively t)
       (setq org-confirm-babel-evaluate nil)
-      (setq org-directory "~/Remote/org/")
+      (setq org-directory "~/Network Documents/org/")
       (setq org-default-notes-file (concat org-directory "notes.org"))
       (setq org-capture-templates
             '(
-              ("d" "Diary" entry (file+datetree "~/Remote/org/journal.org") "* %?\n")
+              ("d" "Diary" entry (file+datetree "~/Network Documents/org/journal.org") "* %?\n")
               ("q" "Quick note" entry (file org-default-notes-file) "* %?")
               ("n" "Note" entry (file org-default-notes-file) "* %^{Heading} %^G\n%?")
-              ("r" "Drill item" entry (file "~/Remote/org/drill.org") "* %^{Question} :drill:\n%^{Answer}")
-              ("t" "Todo" entry (file+headline "~/Remote/org/taskdiary.org" "Triage") "* TODO %? %^G\n Added: %U")
+              ("r" "Drill item" entry (file "~/Network Documents/org/drill.org") "* %^{Question} :drill:\n%^{Answer}")
+              ("t" "Todo" entry (file+headline "~/Network Documents/org/taskdiary.org" "Triage") "* TODO %? %^G\n Added: %U")
               ))
-      (setq org-agenda-files '("~/Remote/org/"))
+      (setq org-agenda-files '("~/Network Documents/org/"))
       (setq org-refile-targets '((nil :maxlevel . 9)
                                  (org-agenda-files :maxlevel . 2)))
       (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
@@ -416,7 +416,7 @@ This function is called at the very end of Spacemacs initialization."
      ("???" . "#dc752f")))
  '(org-capture-templates
    '(("s" "Test" entry
-      (file "~/Remote/org/test.org")
+      (file "~/Network Documents/org/test.org")
       "* %?
 ")
      ("n" "Note" entry
@@ -424,7 +424,7 @@ This function is called at the very end of Spacemacs initialization."
       "* %? %^G
 ")
      ("t" "Todo" entry
-      (file+headline "~/Remote/org/taskdiary.org" "Triage")
+      (file+headline "~/Network Documents/org/taskdiary.org" "Triage")
       "* TODO %? %^G
  Added: %U")))
  '(package-selected-packages
