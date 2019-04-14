@@ -1,19 +1,29 @@
-Config { font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
-       , bgColor = "black"
-       , fgColor = "white"
-       , position = TopW L 100
-       , lowerOnStart = True
-       , hideOnStart = False
-       , allDesktops = True
-       , overrideRedirect = False
-       , persistent = True
-       , commands = [ Run Weather "EGLC" ["-t"," <tempC>C","-L","14","-H","23","--normal","green","--high","red","--low","lightblue"] 36000
-                    , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
-                    , Run Memory ["-t","Mem: <usedratio>%"] 10
-                    , Run Date "%a %b %_d %l:%M" "date" 10
-                    , Run StdinReader
-                    ]
-       , sepChar = "%"
-       , alignSep = "}{"
-       , template = "%StdinReader% }{ %cpu% | %memory% <fc=#ee9a00>%date%</fc> | %LCY%"
-       }
+-- xmobar config used by Vic Fryzel
+-- Author: Vic Fryzel
+-- http://github.com/vicfryzel/xmonad-config
+
+-- This is setup for dual 1920x1080 monitors, with the right monitor as primary
+Config {
+    position = TopW C 100,
+--    border = BottomB,
+    borderColor = "grey",
+    font = "xft:Fixed-8",
+    bgColor = "#000000",
+    fgColor = "#ffffff",
+    lowerOnStart = True,
+    hideOnStart = False,
+    allDesktops = True,
+    overrideRedirect = False,
+    persistent = True,
+    commands = [
+        Run MultiCpu ["-t","Cpu: <total0>% ","-L","30","-H","60","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC","-w","3"] 10,
+        Run Memory ["-t","Mem: <usedratio>%","-H","8192","-L","4096","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC"] 10,
+        Run Swap ["-t","Swap: <usedratio>%","-H","1024","-L","512","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC"] 10,
+        Run Network "wlp3s0" ["-t","Net: <rx>, <tx>","-H","200","-L","10","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC"] 10,
+        Run Date "%a %b %_d %l:%M" "date" 10,
+        Run StdinReader
+    ],
+    sepChar = "%",
+    alignSep = "}{",
+    template = "%StdinReader% }{ %multicpu%   %memory%   %swap%   %wlp3s0%   <fc=#FFFFCC>%date%</fc> "
+}
