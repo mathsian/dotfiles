@@ -5,17 +5,17 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Util.Run(spawnPipe)
 import System.IO
 
-xmobarTitleColor = "#22CCDD"
-xmobarCurrentWorkspaceColor = "#CEFFAC"
-myNormalBorderColor  = "black"
-myFocusedBorderColor = "#22CCDD"
+xmobarTitleColor = "#6c99bb"
+xmobarCurrentWorkspaceColor = "#e5b567"
+myNormalBorderColor  = "#9f4e85"
+myFocusedBorderColor = "#6c99bb"
 
 main = do
         xmproc <- spawnPipe "xmobar ~/.xmobarrc"
         xmonad $ docks $ defaultConfig
                 { terminal = "kitty"
                 , modMask = mod4Mask
-                , borderWidth = 1
+                , borderWidth = 2
                 , normalBorderColor = myNormalBorderColor
                 , focusedBorderColor = myFocusedBorderColor
                 , manageHook = manageDocks <+> manageHook defaultConfig
