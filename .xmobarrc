@@ -7,7 +7,7 @@ Config {
     position = TopW C 100,
 --    border = BottomB,
     borderColor = "#d0d0d0",
-    font = "xft:Fixed-8",
+    font = "xft:Ubuntu Mono-12",
     bgColor = "#212121",
     fgColor = "#d0d0d0",
     lowerOnStart = True,
@@ -16,14 +16,16 @@ Config {
     overrideRedirect = False,
     persistent = True,
     commands = [
+        Run Network "wlp3s0" ["-t","Net: <rx>, <tx>","-H","200","-L","10","-h","#ac4142","-l","#7e8e50","-n","#d0d0d0"] 10,
         Run MultiCpu ["-t","Cpu: <total0>% ","-L","30","-H","60","-h","#ac4142","-l","#7e8e50","-n","#d0d0d0","-w","3"] 10,
         Run Memory ["-t","Mem: <usedratio>%","-H","8192","-L","4096","-h","#ac4142","-l","#7e8e50","-n","#d0d0d0"] 10,
         Run Swap ["-t","Swap: <usedratio>%","-H","1024","-L","512","-h","#ac4142","-l","#7e8e50","-n","#d0d0d0"] 10,
-        Run Network "wlp3s0" ["-t","Net: <rx>, <tx>","-H","200","-L","10","-h","#ac4142","-l","#7e8e50","-n","#d0d0d0"] 10,
         Run Date "%a %b %_d %l:%M" "date" 10,
+        Run BatteryN ["BAT0"] ["-t", "B0: <left>%", "-L", "20", "-H", "80", "-h", "#7e8e50", "-l", "#ac4142"] 10 "bat0",
+        Run BatteryN ["BAT1"] ["-t", "B1: <left>% AC: <acstatus>", "-L", "20", "-H", "80", "-h", "#7e8e50", "-l", "#ac4142","--", "-f", "AC/online", "-O", "On", "-o", "Off"] 10 "bat1",
         Run StdinReader
     ],
     sepChar = "%",
     alignSep = "}{",
-    template = "%StdinReader% }{ %multicpu%   %memory%   %swap%   %wlp3s0%   <fc=#d0d0d0>%date%</fc> "
+    template = "%StdinReader% }{  %wlp3s0%   %multicpu%   %memory%   %swap%   %bat0% %bat1%   <fc=#d0d0d0>%date%</fc> "
 }
