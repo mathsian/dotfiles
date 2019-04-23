@@ -1,16 +1,33 @@
 import XMonad
-import XMonad.Config.Gnome
-import XMonad.Layout.Spiral
+import XMonad.Hooks.SetWMName
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.DynamicLog
+import XMonad.Util.Run(spawnPipe)
+import System.IO
+import XMonad.Util.EZConfig(additionalKeysP)
 
-myLayout = spiral (3/4) ||| Full ||| tiled ||| Mirror tiled
-  where
-    tiled = Tall nmaster delta ratio
-    nmaster = 1
-    ratio = 5/8
-    delta = 1/100
-myFocusedBorderColor = "#A7DBD8"
+xmobarTitleColor = "#6c99bb"
+xmobarCurrentWorkspaceColor = "#e5b567"
+myNormalBorderColor  = "#9f4e85"
+myFocusedBorderColor = "#6c99bb"
 
-main = xmonad $ gnomeConfig
-  {layoutHook = avoidStruts (myLayout),
-   focusedBorderColor = myFocusedBorderColor}
+main = do
+        xmproc <- spawnPipe "xmobar ~/.xmobarrc"
+        xmonad $ docks $ defaultConfig
+                { terminal = "kitty"
+                , modMask = mod4Mask
+                , borderWidth = 2
+                , normalBorderColor = myNormalBorderColor
+                , focusedBorderColor = myFocusedBorderColor
+                , manageHook = manageDocks <+> manageHook defaultConfig
+                , layoutHook = avoidStruts $ layoutHook defaultConfig
+                , logHook = dynamicLogWithPP $ xmobarPP 
+                        { ppOutput = hPutStrLn xmproc
+                        , ppTitle = xmobarColor xmobarTitleColor "" . shorten 100
+                        , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
+                        , ppSep = "   "
+                        }
+                , startupHook = setWMName "LG3D"
+                } `additionalKeysP`
+                [("M-S-p", spawn "rofi -show combi")
+                ]
