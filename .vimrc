@@ -18,6 +18,7 @@ Plugin 'neovimhaskell/haskell-vim'
 Plugin 'elixir-editors/vim-elixir'
 Plugin 'udalov/kotlin-vim'
 Plugin 'lervag/vimtex'
+Plugin 'tpope/vim-surround'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
