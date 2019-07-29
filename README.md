@@ -1,4 +1,4 @@
-sudo aptitude install zsh vim xmonad xmobar kitty nemo rofi
+sudo apt-get install zsh vim git
 
 sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 
