@@ -29,7 +29,9 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(racket
+   '(haskell
+     racket
+     kotlin
      pdf
      ess
      org
@@ -347,7 +349,7 @@ you should place your code here."
   (setq org-icalendar-use-deadline '(event-if-todo event-if-not-todo todo-due))
   ;; This ensures "scheduled" org items show up, and show up as start times
   (setq org-icalendar-use-scheduled '(todo-start event-if-todo event-if-not-todo))
-  (eval-after-load 'org
+    (eval-after-load 'org
     (lambda()
       (require 'ess-site)
       (require 'ob-R)
@@ -357,6 +359,7 @@ you should place your code here."
       (require 'ob-org)
       (require 'ob-css)
       (require 'ob-js)
+      (require 'ob-haskell)
       (require 'org-drill)
       (setq org-export-babel-evaluate nil)
       (setq org-startup-indented t)
@@ -366,6 +369,15 @@ you should place your code here."
       (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
       ;; Update images from babel code blocks automatically
       (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+      (org-babel-do-load-languages
+       'org-babel-load-languages
+       '(
+         (ditaa . t)
+         (python . t)
+         (haskell . t)
+         )
+       ) ; this line activates ditaa
+      (setq org-ditaa-jar-path "/usr/bin/ditaa")
       (setq org-src-fontify-natively t)
       (setq org-src-tab-acts-natively t)
       (setq org-confirm-babel-evaluate nil)
@@ -383,6 +395,9 @@ you should place your code here."
       (setq org-refile-targets '((nil :maxlevel . 9)
                                  (org-agenda-files :maxlevel . 2)))
       (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
+      (require 'ox-latex)
+      (setq org-latex-listings 'minted)
+      (add-to-list 'org-latex-packages-alist '("" "minted"))
       (setq org-refile-use-outline-path t)))
   )
 ;; Do not write anything past this comment. This is where Emacs will
@@ -444,9 +459,13 @@ This function is called at the very end of Spacemacs initialization."
      ("t" "Todo" entry
       (file+headline "~/Network Documents/org/taskdiary.org" "Triage")
       "* TODO %? %^G
- Added: %U")) t)
+ Added: %U")))
+ '(org-drill-learn-fraction 0.1)
+ '(org-drill-spaced-repetition-algorithm 'sm5)
+ '(org-latex-pdf-process
+   '("xelatex --shell-escape -interaction nonstopmode -output-directory %o %f" "xelatex --shell-escape -interaction nonstopmode -output-directory %o %f"))
  '(package-selected-packages
-   '(org-pdfview pdf-tools yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic unfill smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit transient git-commit with-editor diff-hl company-statistics company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
+   '(yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic unfill smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit transient git-commit with-editor diff-hl company-statistics company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    '((20 . "#f36c60")
