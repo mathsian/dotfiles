@@ -87,4 +87,5 @@ export -f _have() { which $@ >/dev/null }
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 alias sudo='nocorrect sudo'
+alias ktty='kitty +kitten ssh'
 source .zshrc.local
