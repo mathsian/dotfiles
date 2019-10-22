@@ -1,1 +1,1 @@
-xmonad_gnome.hs
+./xmonad_pure.hs
