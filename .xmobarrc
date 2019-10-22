@@ -11,7 +11,7 @@ Config {
     overrideRedirect = False,
     persistent = True,
     commands = [
-        Run Wireless "wlp3s0" [ "-t", "<essid> <quality>" ] 10,
+        Run Wireless "wlp3s0" [ "-t", "<essid> <quality>","-L","40","-H","60","-l","#ac4142","-h","#7e8e50"] 10,
 --        Run Network "wlp3s0" ["-t","Net <rx>, <tx>","-H","200","-L","10","-h","#ac4142","-l","#7e8e50","-n","#d0d0d0"] 10,
         Run MultiCpu ["-t","Cpu <total0>% ","-L","30","-H","60","-h","#ac4142","-l","#7e8e50","-n","#d0d0d0","-w","3"] 10,
         Run Memory ["-t","Mem <usedratio>%","-H","8192","-L","4096","-h","#ac4142","-l","#7e8e50","-n","#d0d0d0"] 10,
@@ -23,5 +23,5 @@ Config {
     ],
     sepChar = "%",
     alignSep = "}{",
-    template = "%StdinReader% }{  %wlp3s0%   %multicpu%   %memory%   %swap%   %bat0% %bat1%   <fc=#d0d0d0>%date%</fc> "
+    template = "%StdinReader% }{  %wlp3s0wi%   %multicpu%   %memory%   %swap%   %bat0% %bat1%   <fc=#d0d0d0>%date%</fc> "
 }
