@@ -1,3 +1,2 @@
-rofi.theme: /usr/share/rofi/themes/Arc-Dark.rasi
 rofi.modi: combi
 rofi.combi-modi: drun,run,window,ssh
