@@ -8,24 +8,26 @@ import XMonad.Util.EZConfig(additionalKeysP)
 import XMonad.Layout.Spacing
 import XMonad.Layout.Circle
 import XMonad.Layout.Dwindle
+import XMonad.Layout.Named
 
 xmobarTitleColor = "#6c99bb"
 xmobarCurrentWorkspaceColor = "#e5b567"
 myNormalBorderColor  = "#9f4e85"
 myFocusedBorderColor = "#6c99bb"
-myLayout = dwindle ||| Circle ||| tiled ||| Mirror tiled ||| Full
+myLayout = dwindle ||| circle ||| horiz ||| vert ||| full
   where
-    tiled = smartSpacing 5 $ Tall nmaster delta ratio
-    nmaster = 1
-    ratio = 1/2
-    delta = 3/100
-    dwindle = smartSpacing 5 $ Dwindle R CW (3/2) (11/10)
+    full = named "full" $ Full
+    horiz = named "horiz" $ smartSpacing 1 $ Tall 1 (3/100) (1/2)
+    circle = named "circle" $ Circle
+    vert = named "vert" $ Mirror horiz
+    dwindle = named "dwindle" $ smartSpacing 1 $ Dwindle R CW (3/2) (11/10)
+
 main = do
         xmproc <- spawnPipe "xmobar ~/.xmobarrc"
         xmonad $ docks $ defaultConfig
                 { terminal = "kitty"
                 , modMask = mod4Mask
-                , borderWidth = 2
+                , borderWidth = 1
                 , normalBorderColor = myNormalBorderColor
                 , focusedBorderColor = myFocusedBorderColor
                 , manageHook = manageDocks <+> manageHook defaultConfig

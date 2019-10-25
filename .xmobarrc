@@ -2,7 +2,7 @@ Config {
     position = TopW C 100,
 --    border = BottomB,
     borderColor = "#d0d0d0",
-    font = "xft:Ubuntu Mono-12",
+    font = "xft:FiraMono",
     bgColor = "#212121",
     fgColor = "#d0d0d0",
     lowerOnStart = True,
