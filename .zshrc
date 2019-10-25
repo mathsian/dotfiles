@@ -51,7 +51,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git screen)
+plugins=(git nix-zsh-completions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -64,7 +64,7 @@ export PATH=$PATH:$HOME/bin
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
-export EDITOR='vim'
+export EDITOR='emacsclient'
 # else
 #   export EDITOR='mvim'
 # fi
