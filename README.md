@@ -1,10 +1,10 @@
-sudo aptitude install zsh vim xmonad xmobar kitty nemo rofi
+sudo apt-get install zsh vim git
 
 sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 
 git clone --bare https://github.com/mathsian/dotfiles $HOME/.cfg
 
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias config='`which git` --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 config checkout
 
