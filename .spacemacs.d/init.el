@@ -46,11 +46,6 @@ values."
             shell-default-position 'bottom
             shell-default-shell 'term
             shell-default-term-shell "/usr/bin/zsh")
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
      helm
      auto-completion
      better-defaults
@@ -322,16 +317,17 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (global-company-mode t)
   (setf async-bytecomp-allowed-packages nil)
   (setq doc-view-continuous t)
   (setq paradox-github-token "25c246208c64f6c0ba2880cef9acf600b5086eff")
   (setq org-caldav-url "https://cloud.encratica.com/remote.php/dav/calendars/ian")
   (setq org-caldav-calendar-id "org")
-  (setq org-caldav-inbox "~/Network Documents/org/nc.org")
+  (setq org-caldav-inbox "~/Remote/org/nc.org")
   (setq org-caldav-files '(
-                          "~/Network Documents/org/taskdiary.org"
-                          "~/Network Documents/org/notes.org"
-                          "~/Network Documents/org/act.org"
+                          "~/Remote/org/todo.org"
+                          "~/Remote/org/notes.org"
+                          "~/Remote/org/act.org"
                           ))
   (setq org-icalendar-timezone "Europe/London")
   (setq org-icalendar-alarm-time 1)
@@ -343,8 +339,6 @@ you should place your code here."
   (setq org-icalendar-use-scheduled '(todo-start event-if-todo event-if-not-todo))
     (eval-after-load 'org
     (lambda()
-      (require 'ess-site)
-      (require 'ob-R)
       (require 'ob-emacs-lisp)
       (require 'ob-latex)
       (require 'ob-python)
@@ -374,17 +368,18 @@ you should place your code here."
       (setq org-src-fontify-natively t)
       (setq org-src-tab-acts-natively t)
       (setq org-confirm-babel-evaluate nil)
-      (setq org-directory "~/Network Documents/org/")
+      (setq org-directory "~/Remote/org/")
       (setq org-default-notes-file (concat org-directory "notes.org"))
       (setq org-capture-templates
             '(
-              ("d" "Diary" entry (file+datetree "~/Network Documents/org/journal.org") "* %?\n")
+              ("d" "Diary" entry (file+datetree "~/Remote/org/journal.org") "* %?\n")
               ("q" "Quick note" entry (file org-default-notes-file) "* %?")
               ("n" "Note" entry (file org-default-notes-file) "* %^{Heading} %^G\n%?")
-              ("r" "Drill item" entry (file "~/Network Documents/org/drill.org") "* %^{Question} :drill:\n%^{Answer}")
-              ("t" "Todo" entry (file+headline "~/Network Documents/org/taskdiary.org" "Triage") "* TODO %? %^G\n Added: %U")
+              ("r" "Drill item" entry (file "~/Remote/org/drill.org") "* %^{Question} :drill:\n%^{Answer}")
+              ("t" "Todo" entry (file+headline "~/Remote/org/inbox.org" "Inbox") "*** TODO %? %^G\n Added: %U")
+              ("p" "Project" entry (file+headline "~/Remote/org/inbox.org" "Inbox") "** %^{Name}\n%^{Outcome}")
               ))
-      (setq org-agenda-files '("~/Network Documents/org/"))
+      (setq org-agenda-files '("~/Remote/org/"))
       (setq org-refile-targets '((nil :maxlevel . 9)
                                  (org-agenda-files :maxlevel . 2)))
       (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
