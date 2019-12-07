@@ -379,7 +379,7 @@ you should place your code here."
               ))
       (setq org-agenda-files '("~/Remote/org/"))
       (setq org-refile-targets '((nil :maxlevel . 9)
-                                 (org-agenda-files :maxlevel . 2)))
+                                 (org-agenda-files :maxlevel . 4)))
       (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
       (require 'ox-latex)
       (setq org-latex-listings 'minted)
