@@ -372,9 +372,9 @@ you should place your code here."
             '(
               ("d" "Diary" entry (file+datetree "~/Remote/org/journal.org") "* %?\n")
               ("q" "Quick note" entry (file org-default-notes-file) "* %?")
-              ("n" "Note" entry (file org-default-notes-file) "* %^{Heading} %^G\n%?")
+              ("n" "Note" entry (file org-default-notes-file) "* %^{Heading}\n%?")
               ("r" "Drill item" entry (file "~/Remote/org/drill.org") "* %^{Question} :drill:\n%^{Answer}")
-              ("t" "Todo" entry (file+headline "~/Remote/org/inbox.org" "Inbox") "*** TODO %? %^G\n Added: %U")
+              ("t" "Todo" entry (file+headline "~/Remote/org/inbox.org" "Inbox") "*** TODO %?\n Added: %U")
               ("p" "Project" entry (file+headline "~/Remote/org/inbox.org" "Inbox") "** %^{Name}\n%^{Outcome}")
               ))
       (setq org-agenda-files '("~/Remote/org/"))
