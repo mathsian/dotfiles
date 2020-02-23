@@ -368,7 +368,7 @@ you should place your code here."
       (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
       ;; Update images from babel code blocks automatically
       (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
-      (org-babel-load-languages
+      (org-babel-do-load-languages
        'org-babel-load-languages
        '(
          (ditaa . t)
