@@ -88,4 +88,4 @@ export -f _have() { which $@ >/dev/null }
 alias config="`which git` --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 alias sudo='nocorrect sudo'
 alias ktty='kitty +kitten ssh'
-source .zshrc.local
+source $HOME/.zshrc.local
