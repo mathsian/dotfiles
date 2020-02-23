@@ -64,9 +64,8 @@ export PATH=$PATH:$HOME/bin
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
-export EDITOR='emacsclient -nc -s instance1'
 # else
-#   export EDITOR='mvim'
+export EDITOR='vim'
 # fi
 
 # Compilation flags
