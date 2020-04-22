@@ -60,7 +60,7 @@ values."
      spell-checking
      syntax-checking
      version-control
-     pdf-tools
+     pdf
      php
      )
    ;; List of additional packages that will be installed without being
