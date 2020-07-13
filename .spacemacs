@@ -47,7 +47,7 @@ values."
             shell-default-shell 'term
             shell-default-term-shell "/usr/bin/zsh")
      helm
-     ( auto-completion :variables auto-completion-enable-help-tooltip 'manual )
+     (auto-completion :variables auto-completion-enable-help-tooltip 'manual)
      better-defaults
      emacs-lisp
      git
@@ -63,19 +63,20 @@ values."
      version-control
      pdf
      php
-     )
+    )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
                                       org-caldav
-                                      org-noter
+                                      (org-noter
                                         :after org
                                         :ensure t
                                         :config (setq org-noter-default-notes-file-names '("notes.org")
                                                       org-noter-notes-search-path '("~/Remote/MSc/Project/literature/")
                                                       org-noter-separate-notes-from-heading t)
+                                        )
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
