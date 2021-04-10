@@ -16,7 +16,7 @@ Config {
         Run MultiCpu ["-t","Cpu <total0>% ","-L","30","-H","60","-h","#ac4142","-l","#7e8e50","-n","#d0d0d0","-w","3"] 10,
         Run Memory ["-t","Mem <usedratio>%","-H","8192","-L","4096","-h","#ac4142","-l","#7e8e50","-n","#d0d0d0"] 10,
         Run Swap ["-t","Swap <usedratio>%","-H","1024","-L","512","-h","#ac4142","-l","#7e8e50","-n","#d0d0d0"] 10,
-        Run Date "%a %b %_d %l:%M" "date" 10,
+        Run DateZone "%a %b %_d %l:%M" "en_GB.UTF-8" "Europe/London" "date" 10,
         Run BatteryN ["BAT0"] ["-t", "B0 <left>%", "-L", "20", "-H", "80", "-h", "#7e8e50", "-l", "#ac4142"] 10 "bat0",
         Run BatteryN ["BAT1"] ["-t", "B1 <left>% AC <acstatus>", "-L", "20", "-H", "80", "-h", "#7e8e50", "-l", "#ac4142","--", "-f", "AC/online", "-O", "On", "-o", "Off"] 10 "bat1",
         Run StdinReader
